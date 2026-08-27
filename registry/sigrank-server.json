@@ -1,0 +1,46 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "com.signalaf/sigrank",
+  "title": "SigRank — AI Operator Benchmarking",
+  "description": "SigRank benchmark MCP: cascade metrics, leaderboard, operator profiles, simulation, diagnostics.",
+  "version": "1.0.0",
+  "websiteUrl": "https://signalaf.com",
+  "repository": {
+    "url": "https://github.com/SunrisesIllNeverSee/sigrank-app",
+    "source": "github"
+  },
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://signalaf.com/api/mcp"
+    }
+  ],
+  "_meta": {
+    "io.modelcontextprotocol.registry/publisher-provided": {
+      "server_card": "https://signalaf.com/.well-known/mcp.json",
+      "tools": [
+        "rank_paste",
+        "get_leaderboard",
+        "get_operator",
+        "simulate_change",
+        "diagnose_cascade",
+        "suggest_improvements",
+        "self_improve",
+        "rank_windows",
+        "benchmark_me",
+        "rank_if",
+        "operator_gap",
+        "field_anomaly",
+        "who_operates_like_me",
+        "compare_to_field",
+        "operator_signature"
+      ],
+      "tool_count": 15,
+      "authentication": {
+        "required": false,
+        "note": "All SigRank tools are read-only and require no authentication."
+      },
+      "protocol_versions": ["2025-06-18", "2025-03-26"]
+    }
+  }
+}

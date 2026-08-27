@@ -1,0 +1,37 @@
+{
+  "domain": "mos2es.org",
+  "organization": "Ello Cello LLC",
+  "mode": "hosted_steward",
+  "control_plane": "https://signalaf.com",
+  "steward_endpoint": "https://signalaf.com/api/exchange/steward/mos2es.org",
+  "proposal_api": "https://signalaf.com/api/exchange/proposals",
+  "request_api": "https://signalaf.com/api/exchange/requests",
+  "agent_guide": "https://signalaf.com/agents.md",
+  "schema": "https://signalaf.com/exchange.schema.json",
+  "categories": [
+    "technical",
+    "accessibility",
+    "documentation",
+    "research",
+    "data",
+    "integration",
+    "commercial introduction",
+    "workflow improvement",
+    "product improvement"
+  ],
+  "transaction_enabled": false,
+  "status": "steward_live_pending_deploy",
+  "notes": "Cloudflare Worker (promo-worker) serving from _03_promo-site. Enterprise AI Operator Evaluations site.",
+  "execution": {
+    "modes": [
+      "no_execution_required",
+      "self_executed",
+      "direct_agent",
+      "external_provider",
+      "human"
+    ],
+    "default_provider": "internal",
+    "external_enabled": false,
+    "note": "Execution provider layer active. External providers can be registered via the execution router. See EXECUTION_PROVIDER_PLAN.md."
+  }
+}
