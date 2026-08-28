@@ -1,0 +1,106 @@
+{
+  "$schema": "https://raw.githubusercontent.com/modelcontextprotocol/registry/main/docs/reference/server-json/generic-server-json.schema.json",
+  "name": "io.github.SunrisesIllNeverSee/exchange-router",
+  "description": "Marketable intent layer for the Contribution Exchange. 10 tools for agent discovery, signals, proposals.",
+  "version": "0.1.0",
+  "homepage": "https://github.com/SunrisesIllNeverSee/contribution-exchange",
+  "license": "MIT",
+  "author": {
+    "name": "Deric McHenry",
+    "url": "https://signalaf.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SunrisesIllNeverSee/contribution-exchange.git",
+    "directory": "client"
+  },
+  "registryType": "npm",
+  "package": {
+    "name": "exchange-router-mcp",
+    "registry": "https://registry.npmjs.org"
+  },
+  "runtime": "node",
+  "transport": "stdio",
+  "tools": [
+    {
+      "name": "exchange_discover_domain",
+      "description": "Check if a domain publishes a Contribution Exchange profile. Read-only.",
+      "title": "Discover Exchange domain",
+      "annotations": { "readOnlyHint": true, "openWorldHint": true }
+    },
+    {
+      "name": "exchange_get_policy",
+      "description": "Fetch the Exchange policy for a domain. Read-only.",
+      "title": "Get Exchange policy",
+      "annotations": { "readOnlyHint": true, "openWorldHint": true }
+    },
+    {
+      "name": "exchange_preflight",
+      "description": "Preflight a proposed contribution without submitting. Read-only.",
+      "title": "Preflight contribution",
+      "annotations": { "readOnlyHint": true, "openWorldHint": true }
+    },
+    {
+      "name": "exchange_list_signals",
+      "description": "List open Exchange Signals (problems, requests, challenges, bounties). Read-only.",
+      "title": "List Exchange signals",
+      "annotations": { "readOnlyHint": true, "openWorldHint": true }
+    },
+    {
+      "name": "exchange_get_signal",
+      "description": "Get full detail for a single Exchange Signal. Read-only.",
+      "title": "Get Exchange signal",
+      "annotations": { "readOnlyHint": true, "openWorldHint": true }
+    },
+    {
+      "name": "exchange_get_attempt",
+      "description": "Get detail for a signal attempt. Read-only.",
+      "title": "Get attempt detail",
+      "annotations": { "readOnlyHint": true, "openWorldHint": true }
+    },
+    {
+      "name": "exchange_propose",
+      "description": "Submit a Contribution Proposal. Non-binding. Requires EXCHANGE_AGENT_KEY.",
+      "title": "Submit contribution proposal",
+      "annotations": { "readOnlyHint": false, "openWorldHint": true }
+    },
+    {
+      "name": "exchange_create_attempt",
+      "description": "Create an attempt on an Exchange Signal. Requires EXCHANGE_ACTOR_ID.",
+      "title": "Create signal attempt",
+      "annotations": { "readOnlyHint": false, "openWorldHint": true }
+    },
+    {
+      "name": "exchange_submit_attempt",
+      "description": "Submit completed work for a signal attempt. Requires EXCHANGE_ACTOR_ID.",
+      "title": "Submit attempt work",
+      "annotations": { "readOnlyHint": false, "openWorldHint": true }
+    },
+    {
+      "name": "exchange_create_proposal_from_attempt",
+      "description": "Convert a verified attempt into a Contribution Proposal. Requires EXCHANGE_AGENT_KEY.",
+      "title": "Convert attempt to proposal",
+      "annotations": { "readOnlyHint": false, "openWorldHint": true }
+    }
+  ],
+  "keywords": ["mcp", "contribution-exchange", "signalaf", "agent-discovery", "signals", "proposals", "model-context-protocol", "ai-agents", "telemetry"],
+  "categories": ["developer-tools", "ai-and-machine-learning", "monitoring"],
+  "environmentVariables": [
+    {
+      "name": "EXCHANGE_API_BASE",
+      "description": "Exchange API base URL",
+      "default": "https://signalaf.com",
+      "required": false
+    },
+    {
+      "name": "EXCHANGE_ACTOR_ID",
+      "description": "Actor ID for exchange:attempt scope (create/submit attempts)",
+      "required": false
+    },
+    {
+      "name": "EXCHANGE_AGENT_KEY",
+      "description": "Agent key for exchange:propose scope (submit proposals)",
+      "required": false
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "name": "exchange-router-mcp",
+  "version": "0.1.0",
+  "description": "Marketable intent layer for the Contribution Exchange. 10 tools for agent discovery, signals, proposals, and attempts. Calls signalaf.com's public Exchange API. No local state.",
+  "mcpName": "io.github.SunrisesIllNeverSee/exchange-router",
+  "type": "module",
+  "main": "index.mjs",
+  "bin": {
+    "exchange-router": "index.mjs"
+  },
+  "scripts": {
+    "start": "node index.mjs",
+    "test": "node --test __tests__/*.mjs"
+  },
+  "keywords": [
+    "mcp",
+    "contribution-exchange",
+    "signalaf",
+    "agent-discovery",
+    "signals",
+    "proposals",
+    "model-context-protocol",
+    "ai-agents",
+    "telemetry"
+  ],
+  "license": "MIT",
+  "author": "Deric McHenry (@burnmydays)",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SunrisesIllNeverSee/contribution-exchange.git",
+    "directory": "client"
+  },
+  "homepage": "https://github.com/SunrisesIllNeverSee/contribution-exchange#readme",
+  "bugs": {
+    "url": "https://github.com/SunrisesIllNeverSee/contribution-exchange/issues"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
