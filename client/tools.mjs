@@ -27,7 +27,7 @@ const MUTATION = { readOnlyHint: false, openWorldHint: true };
 async function apiGet(path) {
   const url = `${API_BASE}${path}`;
   const res = await fetch(url, {
-    headers: { "accept": "application/json", "user-agent": "exchange-router-mcp/0.1" },
+    headers: { "accept": "application/json", "user-agent": "exchange-router-mcp/0.2" },
   });
   const body = await res.json().catch(() => ({}));
   if (!res.ok) {
@@ -41,7 +41,7 @@ async function apiPost(path, data, scopeHeaders = {}) {
   const headers = {
     "content-type": "application/json",
     "accept": "application/json",
-    "user-agent": "exchange-router-mcp/0.1",
+    "user-agent": "exchange-router-mcp/0.2",
     ...scopeHeaders,
   };
   const res = await fetch(url, {
