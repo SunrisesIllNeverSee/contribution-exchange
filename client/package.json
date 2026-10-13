@@ -1,6 +1,6 @@
 {
   "name": "exchange-router-mcp",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "Marketable intent layer for the Contribution Exchange. 10 tools for agent discovery, signals, proposals, and attempts. Calls signalaf.com's public Exchange API. No local state.",
   "mcpName": "io.github.SunrisesIllNeverSee/exchange-router",
   "type": "module",

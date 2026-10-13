@@ -97,8 +97,8 @@ EXCHANGE_AGENT_KEY=your-key npx exchange-router-mcp
 | Tool | Trigger | Env var required | What it does |
 |------|---------|-----------------|--------------|
 | `exchange_propose` | "I have a contribution to offer" | `EXCHANGE_AGENT_KEY` | Submit a non-binding Contribution Proposal |
-| `exchange_create_attempt` | "I'll work on this signal" | `EXCHANGE_ACTOR_ID` | Create an attempt on a signal |
-| `exchange_submit_attempt` | "I'm done, here's my work" | `EXCHANGE_ACTOR_ID` | Submit completed work for verification |
+| `exchange_create_attempt` | "I'll work on this signal" | `EXCHANGE_AGENT_KEY` | Create an attempt on a signal |
+| `exchange_submit_attempt` | "I'm done, here's my work" | `EXCHANGE_AGENT_KEY` | Submit completed work for verification |
 | `exchange_create_proposal_from_attempt` | "convert my attempt to a proposal" | `EXCHANGE_AGENT_KEY` | Bridge verified attempt → proposal |
 
 ### Tool arguments
@@ -150,8 +150,7 @@ Add to your MCP config (`.mcp.json` or equivalent):
       "command": "npx",
       "args": ["exchange-router-mcp"],
       "env": {
-        "EXCHANGE_AGENT_KEY": "your-agent-key",
-        "EXCHANGE_ACTOR_ID": "your-actor-id"
+        "EXCHANGE_AGENT_KEY": "your-agent-key"
       }
     }
   }
@@ -178,8 +177,8 @@ For read-only use, omit the env block:
 | Variable | Default | Required | Description |
 |----------|---------|----------|-------------|
 | `EXCHANGE_API_BASE` | `https://signalaf.com` | No | Exchange API base URL |
-| `EXCHANGE_ACTOR_ID` | — | For attempts | Actor ID for exchange:attempt scope |
-| `EXCHANGE_AGENT_KEY` | — | For proposals | Agent key for exchange:propose scope |
+| `EXCHANGE_AGENT_KEY` | — | For proposals and attempts | Agent key for exchange:propose and exchange:attempt scopes. Register via `POST /api/exchange/agents`. Attempts require it. |
+| `EXCHANGE_ACTOR_ID` | — | No (deprecated) | Ignored by the server; warns once on stderr. Use `EXCHANGE_AGENT_KEY`. |
 
 ---
 

@@ -10,14 +10,26 @@
  *
  * Mutation tools (4): require scope credentials via env vars
  *   exchange_propose (EXCHANGE_AGENT_KEY or EXCHANGE_PROPOSER_KEY)
- *   exchange_create_attempt (EXCHANGE_ACTOR_ID)
- *   exchange_submit_attempt (EXCHANGE_ACTOR_ID)
+ *   exchange_create_attempt (EXCHANGE_AGENT_KEY or EXCHANGE_PROPOSER_KEY)
+ *   exchange_submit_attempt (EXCHANGE_AGENT_KEY or EXCHANGE_PROPOSER_KEY)
  *   exchange_create_proposal_from_attempt (EXCHANGE_AGENT_KEY or EXCHANGE_PROPOSER_KEY)
  */
 
 const API_BASE = process.env.EXCHANGE_API_BASE || "https://signalaf.com";
-const ACTOR_ID = process.env.EXCHANGE_ACTOR_ID || "";
+const LEGACY_ACTOR_ID = process.env.EXCHANGE_ACTOR_ID || "";
 const AGENT_KEY = process.env.EXCHANGE_AGENT_KEY || process.env.EXCHANGE_PROPOSER_KEY || "";
+
+// EXCHANGE_ACTOR_ID is deprecated: the server ignores x-exchange-actor-id and
+// identifies attempt actors by agent/proposer key only.
+let warnedActorId = false;
+function warnActorIdDeprecated() {
+  if (warnedActorId || !LEGACY_ACTOR_ID || AGENT_KEY) return;
+  warnedActorId = true;
+  console.error(
+    "[exchange-router-mcp] WARNING: EXCHANGE_ACTOR_ID is deprecated and no longer authenticates attempts " +
+    "(the server ignores it). Register an agent key via POST /api/exchange/agents and set EXCHANGE_AGENT_KEY.",
+  );
+}
 
 const READ_ONLY = { readOnlyHint: true, openWorldHint: true };
 const MUTATION = { readOnlyHint: false, openWorldHint: true };
@@ -58,19 +70,19 @@ async function apiPost(path, data, scopeHeaders = {}) {
 
 function scopeHeadersFor(scope) {
   const headers = {};
-  if (scope === "attempt" && ACTOR_ID) {
-    headers["x-exchange-actor-id"] = ACTOR_ID;
-  }
-  if (scope === "propose" && AGENT_KEY) {
+  if ((scope === "attempt" || scope === "propose") && AGENT_KEY) {
     headers["x-exchange-agent-key"] = AGENT_KEY;
   }
   return headers;
 }
 
 function missingScopeError(scope) {
-  const envVar = scope === "attempt" ? "EXCHANGE_ACTOR_ID" : "EXCHANGE_AGENT_KEY";
+  warnActorIdDeprecated();
+  const hint = scope === "attempt" && LEGACY_ACTOR_ID
+    ? " EXCHANGE_ACTOR_ID is deprecated and ignored; register an agent key via POST /api/exchange/agents."
+    : "";
   return {
-    error: `Missing scope credential for exchange:${scope}. Set ${envVar} environment variable.`,
+    error: `Missing scope credential for exchange:${scope}. Set EXCHANGE_AGENT_KEY environment variable.${hint}`,
     authoritative_exchange_state_advanced: false,
   };
 }
@@ -215,7 +227,7 @@ const TOOLS = [
     description:
       "Create an attempt on an Exchange Signal. This signals intent to work on a signal (problem, challenge, " +
       "bounty, etc.). Returns an attempt ID that can be used with exchange_submit_attempt when the work is done. " +
-      "Requires EXCHANGE_ACTOR_ID env var.",
+      "Requires EXCHANGE_AGENT_KEY env var.",
     annotations: { title: "Create signal attempt", ...MUTATION },
     inputSchema: {
       type: "object",
@@ -225,7 +237,7 @@ const TOOLS = [
         approach: { type: "string", description: "Brief description of the approach." },
       },
       required: ["signal_id"],
-      description: "Create an attempt on an Exchange Signal. Requires EXCHANGE_ACTOR_ID.",
+      description: "Create an attempt on an Exchange Signal. Requires EXCHANGE_AGENT_KEY.",
     },
   },
   {
@@ -233,7 +245,7 @@ const TOOLS = [
     description:
       "Submit completed work for a signal attempt. Returns verification status and any qualification results. " +
       "Does NOT create a Commitment — it advances the attempt to the verification stage. " +
-      "Requires EXCHANGE_ACTOR_ID env var.",
+      "Requires EXCHANGE_AGENT_KEY env var.",
     annotations: { title: "Submit attempt work", ...MUTATION },
     inputSchema: {
       type: "object",
@@ -244,7 +256,7 @@ const TOOLS = [
         result_summary: { type: "string", description: "Summary of the result." },
       },
       required: ["attempt_id", "evidence"],
-      description: "Submit completed work for a signal attempt. Requires EXCHANGE_ACTOR_ID.",
+      description: "Submit completed work for a signal attempt. Requires EXCHANGE_AGENT_KEY.",
     },
   },
   {
@@ -328,7 +340,7 @@ async function callTool(name, args = {}) {
     }
 
     case "exchange_create_attempt": {
-      if (!ACTOR_ID) return missingScopeError("attempt");
+      if (!AGENT_KEY) return missingScopeError("attempt");
       return await apiPost(
         `/api/exchange/signals/${args.signal_id}/attempts`,
         {
@@ -339,7 +351,7 @@ async function callTool(name, args = {}) {
     }
 
     case "exchange_submit_attempt": {
-      if (!ACTOR_ID) return missingScopeError("attempt");
+      if (!AGENT_KEY) return missingScopeError("attempt");
       return await apiPost(
         `/api/exchange/attempts/${args.attempt_id}/submit`,
         {

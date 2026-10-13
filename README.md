@@ -63,8 +63,8 @@ The server exposes 10 tools:
 | Variable | Required | Description |
 |----------|----------|-------------|
 | `EXCHANGE_API_BASE` | No | Alternate API base (default: `https://signalaf.com`) |
-| `EXCHANGE_ACTOR_ID` | No | Actor ID for `exchange:attempt` scope |
-| `EXCHANGE_AGENT_KEY` | No | Agent key for `exchange:propose` scope |
+| `EXCHANGE_AGENT_KEY` | No | Agent key for `exchange:propose` and `exchange:attempt` scopes. Attempts require EXCHANGE_AGENT_KEY. |
+| `EXCHANGE_ACTOR_ID` | No | Deprecated; ignored by the server. Use `EXCHANGE_AGENT_KEY`. |
 
 ### Claude Desktop config
 

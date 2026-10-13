@@ -11,8 +11,8 @@
  *
  * Env overrides:
  *   EXCHANGE_API_BASE — alternate API base (default: https://signalaf.com)
- *   EXCHANGE_ACTOR_ID — actor ID for exchange:attempt scope
- *   EXCHANGE_AGENT_KEY — agent key for exchange:propose scope
+ *   EXCHANGE_AGENT_KEY — agent key for exchange:propose and exchange:attempt scope
+ *   EXCHANGE_ACTOR_ID — DEPRECATED, ignored by the server (warns once on stderr)
  */
 import { Server } from "@modelcontextprotocol/sdk/server/index.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";

@@ -79,32 +79,32 @@ test("exchange_propose without EXCHANGE_AGENT_KEY returns missing scope error", 
   }
 });
 
-test("exchange_create_attempt without EXCHANGE_ACTOR_ID returns missing scope error", async () => {
-  const oldId = process.env.EXCHANGE_ACTOR_ID;
-  delete process.env.EXCHANGE_ACTOR_ID;
+test("exchange_create_attempt without EXCHANGE_AGENT_KEY returns missing scope error", async () => {
+  const oldKey = process.env.EXCHANGE_AGENT_KEY;
+  delete process.env.EXCHANGE_AGENT_KEY;
   try {
     const result = await callTool("exchange_create_attempt", {
       signal_id: "test-signal",
     });
-    assert.ok(result.error.includes("EXCHANGE_ACTOR_ID"));
+    assert.ok(result.error.includes("EXCHANGE_AGENT_KEY"));
     assert.equal(result.authoritative_exchange_state_advanced, false);
   } finally {
-    if (oldId) process.env.EXCHANGE_ACTOR_ID = oldId;
+    if (oldKey) process.env.EXCHANGE_AGENT_KEY = oldKey;
   }
 });
 
-test("exchange_submit_attempt without EXCHANGE_ACTOR_ID returns missing scope error", async () => {
-  const oldId = process.env.EXCHANGE_ACTOR_ID;
-  delete process.env.EXCHANGE_ACTOR_ID;
+test("exchange_submit_attempt without EXCHANGE_AGENT_KEY returns missing scope error", async () => {
+  const oldKey = process.env.EXCHANGE_AGENT_KEY;
+  delete process.env.EXCHANGE_AGENT_KEY;
   try {
     const result = await callTool("exchange_submit_attempt", {
       attempt_id: "test-attempt",
       evidence: "test evidence",
     });
-    assert.ok(result.error.includes("EXCHANGE_ACTOR_ID"));
+    assert.ok(result.error.includes("EXCHANGE_AGENT_KEY"));
     assert.equal(result.authoritative_exchange_state_advanced, false);
   } finally {
-    if (oldId) process.env.EXCHANGE_ACTOR_ID = oldId;
+    if (oldKey) process.env.EXCHANGE_AGENT_KEY = oldKey;
   }
 });
 
