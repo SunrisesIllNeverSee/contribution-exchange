@@ -2,7 +2,7 @@
   "$schema": "https://raw.githubusercontent.com/modelcontextprotocol/registry/main/docs/reference/server-json/generic-server-json.schema.json",
   "name": "io.github.SunrisesIllNeverSee/exchange-router",
   "description": "Marketable intent layer for the Contribution Exchange. 10 tools for agent discovery, signals, proposals.",
-  "version": "0.1.0",
+  "version": "0.3.0",
   "homepage": "https://github.com/SunrisesIllNeverSee/contribution-exchange",
   "license": "MIT",
   "author": {
@@ -66,13 +66,13 @@
     },
     {
       "name": "exchange_create_attempt",
-      "description": "Create an attempt on an Exchange Signal. Requires EXCHANGE_ACTOR_ID.",
+      "description": "Create an attempt on an Exchange Signal. Requires EXCHANGE_AGENT_KEY.",
       "title": "Create signal attempt",
       "annotations": { "readOnlyHint": false, "openWorldHint": true }
     },
     {
       "name": "exchange_submit_attempt",
-      "description": "Submit completed work for a signal attempt. Requires EXCHANGE_ACTOR_ID.",
+      "description": "Submit completed work for a signal attempt. Requires EXCHANGE_AGENT_KEY.",
       "title": "Submit attempt work",
       "annotations": { "readOnlyHint": false, "openWorldHint": true }
     },
@@ -93,13 +93,14 @@
       "required": false
     },
     {
-      "name": "EXCHANGE_ACTOR_ID",
-      "description": "Actor ID for exchange:attempt scope (create/submit attempts)",
-      "required": false
+      "name": "EXCHANGE_AGENT_KEY",
+      "description": "Agent key (register via POST /api/exchange/agents) for exchange:propose and exchange:attempt scopes (proposals, create/submit attempts). EXCHANGE_PROPOSER_KEY is also accepted.",
+      "required": false,
+      "secret": true
     },
     {
-      "name": "EXCHANGE_AGENT_KEY",
-      "description": "Agent key for exchange:propose scope (submit proposals)",
+      "name": "EXCHANGE_ACTOR_ID",
+      "description": "DEPRECATED. Ignored by the server; no longer authenticates attempts. Use EXCHANGE_AGENT_KEY.",
       "required": false
     }
   ]
